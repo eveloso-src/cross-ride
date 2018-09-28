@@ -3,6 +3,8 @@
  */
 package com.crossover.techtrial.service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,5 +31,11 @@ public class RideServiceImpl implements RideService{
       return optionalRide.get();
     }else return null;
   }
+
+@Override
+public List<Ride> findByStartTimeAfterAndEndTimeBefore(String startTime, String endTime) {
+
+		return rideRepository.findByStartTimeAfterAndEndTimeBefore(startTime, endTime);
+}
 
 }

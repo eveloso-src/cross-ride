@@ -3,6 +3,9 @@
  */
 package com.crossover.techtrial.service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import com.crossover.techtrial.model.Ride;
 
 /**
@@ -15,6 +18,8 @@ public interface RideService {
   public Ride save(Ride ride);
   
   public Ride findById(Long rideId);
+  
+  public List<Ride> findByStartTimeAfterAndEndTimeBefore(String startTime, String endTime);
   
 
 }

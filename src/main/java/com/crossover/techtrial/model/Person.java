@@ -25,6 +25,9 @@ public class Person implements Serializable{
   private static final long serialVersionUID = 7401548380514451401L;
   
   public Person() {}
+  
+
+  public Person(Long i) {id = i;}
  
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,14 +35,15 @@ public class Person implements Serializable{
 
   @Column(name = "name")
   String name;
+  
 
   @NotNull
   @Email
   @Column(name = "email")
   String email;
 
-  @Column(name = "registration_number")
-  String registrationNumber;
+  @Column(name = "regisNum")
+  String regisNum;
 
   public Long getId() {
     return id;
@@ -53,11 +57,9 @@ public class Person implements Serializable{
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+  
 
-  public String getEmail() {
+public String getEmail() {
     return email;
   }
 
@@ -65,22 +67,23 @@ public class Person implements Serializable{
     this.email = email;
   }
 
-  public String getRegistrationNumber() {
-    return registrationNumber;
-  }
+  
+  public String getRegisNum() {
+	return regisNum;
+}
 
-  public void setRegistrationNumber(String registrationNumber) {
-    this.registrationNumber = registrationNumber;
-  }
+public void setRegisNum(String regisNum) {
+	this.regisNum = regisNum;
+}
 
-  @Override
+@Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
     result = prime * result + ((email == null) ? 0 : email.hashCode());
     result = prime * result + ((id == null) ? 0 : id.hashCode());
     result = prime * result + ((name == null) ? 0 : name.hashCode());
-    result = prime * result + ((registrationNumber == null) ? 0 : registrationNumber.hashCode());
+    result = prime * result + ((regisNum == null) ? 0 : regisNum.hashCode());
     return result;
   }
 
@@ -108,17 +111,17 @@ public class Person implements Serializable{
         return false;
     } else if (!name.equals(other.name))
       return false;
-    if (registrationNumber == null) {
-      if (other.registrationNumber != null)
+    if (regisNum == null) {
+      if (other.regisNum != null)
         return false;
-    } else if (!registrationNumber.equals(other.registrationNumber))
+    } else if (!regisNum.equals(other.regisNum))
       return false;
     return true;
   }
 
   @Override
   public String toString() {
-    return "Person [id=" + id + ", name=" + name + ", email=" + email + ", registrationNumber=" + registrationNumber + "]";
+    return "Person [id=" + id + ", name=" + name + ", email=" + email + ", registrationNumber=" + regisNum + "]";
   }
   
   

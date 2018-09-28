@@ -3,6 +3,8 @@
  */
 package com.crossover.techtrial.controller;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,43 +21,50 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import com.crossover.techtrial.model.Person;
-import com.crossover.techtrial.repositories.PersonRepository;
+
+import com.crossover.techtrial.dto.TopDriverDTO;
+import com.crossover.techtrial.model.Ride;
+import com.crossover.techtrial.repositories.RideRepository;
 
 /**
- * @author kshah
+ * @author emu
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class PersonControllerTest {
+public class RideControllerTest {
   
   MockMvc mockMvc;
   
   @Mock
-  private PersonController personController;
+  private RideController rideController;
   
   @Autowired
   private TestRestTemplate template;
   
   @Autowired
-  PersonRepository personRepository;
+  RideRepository rideRepository;
   
   @Before
   public void setup() throws Exception {
-    mockMvc = MockMvcBuilders.standaloneSetup(personController).build();
+    mockMvc = MockMvcBuilders.standaloneSetup(rideController).build();
   }
   
   @Test
-  public void testPanelShouldBeRegistered() throws Exception {
-    HttpEntity<Object> person = getHttpEntity(
-        "{\"name\": \"test 1\", \"email\": \"test10000000000001@gmail.com\"," 
-            + " \"regisNum\": \"41DCT\",\"registrationDate\":\"2018-08-08T12:12:12\" }");
-    ResponseEntity<Person> response = template.postForEntity(
-        "/api/person", person, Person.class);
-    //Delete this user
-    personRepository.deleteById(response.getBody().getId());
-    Assert.assertEquals("test 1", response.getBody().getName());
+  public void testRide() throws Exception {
+    HttpEntity<Object> riderObj = getHttpEntity(
+        "{\"driver\": 6, \"rider\": 3, \"distance\": 3, \"startTime\":\"2018-08-08T12:12:12\", " 
+            + " \"endTime\":\"2018-08-08T12:12:12\" }");
+    ResponseEntity<Ride> response = template.postForEntity(
+        "/api/ride", riderObj, Ride.class);
+    rideRepository.deleteById(response.getBody().getId());
+    Assert.assertEquals(200,response.getStatusCode().value());
+  }
+
+  @Test
+  public void testRideList() throws Exception {
+    ResponseEntity<List<TopDriverDTO>> response = template.getForEntity(
+        "/api/top-rides?startTime=2017-08-08T12:12:12&endTime=2019-08-08T12:12:12",  null,List.class);
     Assert.assertEquals(200,response.getStatusCode().value());
   }
 
